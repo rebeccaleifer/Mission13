@@ -18,12 +18,12 @@ namespace Mission13.Components
 
         public IViewComponentResult Invoke()
         {
-            ViewBag.SelectedTeam = RouteData?.Values["TeamID"];
+            ViewBag.SelectedTeam = RouteData?.Values["teamname"];
 
             var teams = _context.Teams
                 //.Select(x => x.TeamName)
                 .Distinct()
-                .OrderBy(x => x.TeamName);
+                .OrderBy(x => x);
 
             return View(teams);
         }

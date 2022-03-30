@@ -22,12 +22,24 @@ namespace Mission13.Controllers
 
         public IActionResult Index(int teamid)
         {
+            var bowling = _context.Bowlers
+                .Where(b => b.TeamID == teamid || teamid == 0)
+                .ToList();
+            if (teamid == 0)
+            {
+                ViewBag.Header = "All Teams";
+            }
+            else
+            {
+                ViewBag.Header = _context.Teams.Single(x => x.TeamID == teamid).TeamName;
+            }
+
             var blah = _context.Bowlers
                 //.FromSqlRaw("SELECT * FROM bowlers WHERE BowlerFirstName = 'Barbara'")
                 .Where(b => b.TeamID == teamid || teamid == 0)
                 .ToList();
 
-            return View(blah);
+            return View(bowling);
         }
 
         [HttpGet]
